@@ -7,12 +7,20 @@
 
 import SwiftUI
 
-struct TrailingIconLabelStyle: View {
-    var body: some View {
-        Text(/*@START_MENU_TOKEN@*/"Hello, World!"/*@END_MENU_TOKEN@*/)
-    }
+struct TrailingIconLabelStyle: LabelStyle {
+    //
+    // makeBody is called for each label instance
+    //
+    func makeBody(configuration: Configuration) -> some View {
+        HStack {
+            configuration.title
+            configuration.icon
+        }
+        }
 }
-
-#Preview {
-    TrailingIconLabelStyle()
+extension LabelStyle where Self == TrailingIconLabelStyle {
+    //
+    // Extension creates a static property called trainingIcon
+    //
+    static var trailingIcon: Self {Self()}
 }

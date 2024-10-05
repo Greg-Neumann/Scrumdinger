@@ -8,11 +8,38 @@
 import SwiftUI
 
 struct CardView: View {
+    let scrum: DailyScrum
     var body: some View {
-        Text(/*@START_MENU_TOKEN@*/"Hello, World!"/*@END_MENU_TOKEN@*/)
+        VStack(alignment: .leading){
+            Text(scrum.title)
+                .font(.headline)
+            //
+            // Voiceover to announce the title text followed by 'heading'
+            //
+                .accessibilityAddTraits(.isHeader)
+            //
+            Spacer(minLength: 5)
+            HStack{
+                Label("\(scrum.attendees.count)", systemImage: "person.3")
+                    .accessibilityLabel("\(scrum.attendees.count) attendees")
+                Spacer()
+                Label("\(scrum.lengthInMinutes)", systemImage: "clock")
+                accessibilityLabel("\(scrum.lengthInMinutes) minutes meeting")
+                    .labelStyle(.trailingIcon) // custom label style
+            }
+            .font(.caption)
+        }
+        .padding()
+        .foregroundColor(scrum.theme.accentColour)
     }
 }
 
 #Preview {
-    CardView()
+    //
+    // define values that are consumed in the CardView whilst preparing this preview
+    //
+    @Previewable @State var scrum = DailyScrum.sampleData[0]
+    return CardView(scrum:scrum)
+        .background(scrum.theme.mainColour)
 }
+

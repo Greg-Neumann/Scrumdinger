@@ -8,11 +8,18 @@
 import SwiftUI
 
 struct ScrumsView: View {
+    let scrums: [DailyScrum]
     var body: some View {
-        Text(/*@START_MENU_TOKEN@*/"Hello, World!"/*@END_MENU_TOKEN@*/)
+        List(scrums){ scrum in
+            CardView(scrum: scrum)
+                .listRowBackground(scrum.theme.mainColour)
+        }
     }
 }
 
 #Preview {
-    ScrumsView()
+    //
+    // Pass in mock data
+    //
+    ScrumsView(scrums: DailyScrum.sampleData)
 }
