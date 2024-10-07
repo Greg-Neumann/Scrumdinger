@@ -11,6 +11,10 @@ import OSLog
 struct ScrumsView: View {
     let scrums: [DailyScrum]
     var body: some View {
+        //
+        // There is no need to pass an explicit identifier for the List control as
+        // the Identifiable protocol on the DailyScrum struct implicitely addresses this
+        //
         List(scrums){ scrum in
             Logger.viewCycle.debug("Scrum \(scrum.title)")
             return CardView(scrum: scrum)
