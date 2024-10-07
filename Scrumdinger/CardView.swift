@@ -18,13 +18,17 @@ struct CardView: View {
             //
                 .accessibilityAddTraits(.isHeader)
             //
-            Spacer(minLength: 5)
+            Spacer()
             HStack{
                 Label("\(scrum.attendees.count)", systemImage: "person.3")
                     .accessibilityLabel("\(scrum.attendees.count) attendees")
                 Spacer()
                 Label("\(scrum.lengthInMinutes)", systemImage: "clock")
-                accessibilityLabel("\(scrum.lengthInMinutes) minutes meeting")
+                //
+                // 😱 Omitting the following leading '.' leads to an infinite loop in this VStack
+                // with no compiler error - shocking!
+                //
+                    .accessibilityLabel("\(scrum.lengthInMinutes) minutes meeting")
                     .labelStyle(.trailingIcon) // custom label style
             }
             .font(.caption)

@@ -38,9 +38,10 @@ enum Theme: String {
         }
     }
     var mainColour: Color {
+        // use the enumeration's raw value from the Asset Catalogue
         Color(
             rawValue
-        ) // use the enumeration's raw value from the Asset Catalogue
+        )
     }
     
 }
