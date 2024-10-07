@@ -11,14 +11,30 @@ import OSLog
 struct ScrumsView: View {
     let scrums: [DailyScrum]
     var body: some View {
-        //
-        // There is no need to pass an explicit identifier for the List control as
-        // the Identifiable protocol on the DailyScrum struct implicitely addresses this
-        //
-        List(scrums){ scrum in
-            Logger.viewCycle.debug("Scrum \(scrum.title)")
-            return CardView(scrum: scrum)
-                .listRowBackground(scrum.theme.mainColour)
+        NavigationStack{
+            //
+            // There is no need to pass an explicit identifier for the List control as
+            // the Identifiable protocol on the DailyScrum struct implicitely addresses this
+            //
+            List(scrums){ scrum in
+                Logger.viewCycle.debug("Scrum \(scrum.title)")
+                //
+                return NavigationLink(destination: DetailView(scrum: scrum)){
+                    CardView(scrum: scrum)
+                       
+                } .listRowBackground(scrum.theme.mainColour)
+            }
+            //
+            // This modified on the List element is cascaded to the chiled NavigationStack item
+            //
+            .navigationTitle("Daily Scrums")
+            //
+            .toolbar{
+                Button(action: {}){
+                    Image(systemName: "plus")
+                }
+                .accessibilityLabel("New Scrum")
+            }
         }
     }
 }

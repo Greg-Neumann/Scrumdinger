@@ -39,9 +39,11 @@ enum Theme: String {
     }
     var mainColour: Color {
         // use the enumeration's raw value from the Asset Catalogue
-        Color(
-            rawValue
-        )
+        Color(rawValue)
+    }
+    var name: String {
+        // capitalize the enumeration value
+        rawValue.capitalized
     }
     
 }
