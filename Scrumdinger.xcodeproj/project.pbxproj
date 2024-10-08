@@ -32,8 +32,8 @@
 		1F5DF0162CAFF90C006D17CC = {
 			isa = PBXGroup;
 			children = (
-				1F5DF0202CAFF90C006D17CC /* Products */,
 				1F5DF0212CAFF90C006D17CC /* Scrumdinger */,
+				1F5DF0202CAFF90C006D17CC /* Products */,
 			);
 			sourceTree = "<group>";
 		};
