@@ -11,7 +11,7 @@ struct DetailEditView: View {
     //
     // Encapsulate State as only accessible inside this current View
     //
-    @State private var scrum : DailyScrum = DailyScrum.emptyScrum
+    @Binding  var scrum : DailyScrum
     @State private var newAttendeeName = ""
 
     //
@@ -37,6 +37,7 @@ struct DetailEditView: View {
                     Text("\(scrum.lengthInMinutes) minutes")
                         .accessibilityHidden(true)
                 }
+                ThemePicker(selection: $scrum.theme)
             }
             Section(header: Text("Attendees")){
                 ForEach(scrum.attendees){ attendee in
@@ -68,5 +69,8 @@ struct DetailEditView: View {
 }
 
 #Preview {
-    DetailEditView()
+    //
+    // Immutable value passed in as preview
+    //
+    DetailEditView(scrum: .constant(DailyScrum.sampleData[0]))
 }

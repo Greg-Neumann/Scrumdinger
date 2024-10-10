@@ -8,14 +8,15 @@
 import SwiftUI
 
 struct DetailView: View {
-    let scrum: DailyScrum
-    
+    @Binding var scrum: DailyScrum
+    //
+    @State private var editingScrum = DailyScrum.emptyScrum
     @State private var isPresentingEditView = false
     
     var body: some View {
         List{
             Section(header: Text("Meeting Info")){
-                NavigationLink(destination: MeetingView()) {
+                NavigationLink(destination: MeetingView(scrum: $scrum)) {
                     //
                     // This Navigation Link adds a gesture recognizer so that the row can be
                     // tapped to navigate to the child screen
@@ -25,7 +26,7 @@ struct DetailView: View {
                         .foregroundColor(.accentColor)
                 }
                 HStack {
-                    Label("Length", systemImage: "Clock")
+                    Label("Length", systemImage: "clock")
                     Spacer()
                     Text("\(scrum.lengthInMinutes) minutes")
                 }
@@ -52,11 +53,23 @@ struct DetailView: View {
                  Label(attendee.name, systemImage: "person")
                 }
             }
+            Section(header: Text("History")){
+                if scrum.history.isEmpty {
+                    Label("No Meetings yet",systemImage: "calendar.badge.exclamationmark")
+                }
+                ForEach(scrum.history){history in
+                    HStack{
+                        Image(systemName: "Calendar")
+                        Text(history.date, style: .date)
+                    }
+                }
+            }
         }
         .navigationTitle(scrum.title)
         .toolbar{
             Button("Edit"){
                 isPresentingEditView = true
+                editingScrum = scrum
             }
         }
         //
@@ -65,12 +78,18 @@ struct DetailView: View {
         //
         .sheet(isPresented: $isPresentingEditView){
             NavigationStack{
-                DetailEditView()
+                DetailEditView(scrum: $editingScrum)
                     .navigationTitle(scrum.title)
                     .toolbar{
                         ToolbarItem(placement: .cancellationAction){
                             Button("Cancel"){
                                 isPresentingEditView = false
+                            }
+                        }
+                        ToolbarItem(placement: .confirmationAction){
+                            Button("Done"){
+                                isPresentingEditView = false
+                                scrum = editingScrum
                             }
                         }
                     }
@@ -81,7 +100,7 @@ struct DetailView: View {
 
 #Preview {
     NavigationStack {
-        DetailView(scrum:   DailyScrum.sampleData[1])
+        DetailView(scrum:  .constant( DailyScrum.sampleData[1]))
     }
    
 }

@@ -9,7 +9,7 @@ import SwiftUI
 //
 // SwiftUI defines the Color structure used in accentColour
 //
-enum Theme: String {
+enum Theme: String, CaseIterable, Identifiable {
     case bubblegum
     case buttercup
     case indigo
@@ -26,6 +26,10 @@ enum Theme: String {
     case tan
     case teal
     case yellow
+    //
+    // Identifiable mandates existance of 'id' which is declared as being the name of the theme (part of the enum)
+    //
+    var id: String { name }
     
     var accentColour: Color{
         //
